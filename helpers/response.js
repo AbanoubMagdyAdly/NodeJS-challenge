@@ -1,8 +1,12 @@
-const success = (status = 1,data) => {
-    return {
-        status: status || 1,
+const success = (data, metaData) => {
+    res =  {
+        status: 1,
         data: data || true
     }
+    if(metaData){
+        res._metadata = metaData
+    }
+    return res;
 }
 
 const failure = (error) => {
@@ -12,6 +16,17 @@ const failure = (error) => {
     }
 }
 
+const paginate = (count, totalProductsCount, PageSize, page) => {
+    return {
+        current_page: page || 1,
+        per_page: PageSize,
+        page_count: count,
+        total_count: totalProductsCount,
+        last_page: Math.ceil(totalProductsCount / PageSize) || 1
+    }
+}
+
 
 module.exports.success = success;
 module.exports.failure = failure;
+module.exports.paginate = paginate;
